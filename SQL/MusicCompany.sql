@@ -86,6 +86,8 @@ INSERT INTO Song VALUES( 'S100','Tum-Hi-Ho','Romantic','A1'),
 
 INSERT INTO Creates VALUES('S100','A1','PC101'),('S101','A2','PC102'),('S103','A1','PC103'),('S104','A3','PC104');
 
+insert into users values('ABC','1234','ADMIN'),('XYZ','4321','ARTIST');
+
 INSERT INTO Publishing_Company VALUES('00-abcd', 'SunderLandInt'),('00-psrn', 'MilestoneMusic'), ('00-dqqi', 'KoverMinesInt'),('00-twrp','T-Series');
 INSERT INTO Contract VALUES('z00-aml', '2021-05-21', 225000.00, '00-abcd'),('y00-llw', '2021-01-01', 355000.00, '00-psrn'),('x00-sxp', '2021-02-01', 500650.00, '00-dqqi'),('z00-xyz','2021-06-25',435555.00,'00-twrp');
 INSERT INTO is_hired VALUES('z00-aml', '00-abcd','PC101'),('y00-llw', '00-psrn','PC102'),('x00-sxp', '00-dqqi','PC103'),('z00-xyz','00-twrp','PC104');
