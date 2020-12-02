@@ -63,6 +63,12 @@ CREATE TABLE is_hired(
 
 );
 
+CREATE TABLE users(
+	uid VARCHAR(20),
+	pwd VARCHAR(20),
+	role VARCHAR(20)
+);
+
 INSERT INTO Artist VALUES('PC101','Arjit Singh'),
 ('PC102','Dosanjh'),
 ('PC103','Shreya Ghoshal'),
@@ -84,6 +90,7 @@ INSERT INTO Publishing_Company VALUES('00-abcd', 'SunderLandInt'),('00-psrn', 'M
 INSERT INTO Contract VALUES('z00-aml', '2021-05-21', 225000.00, '00-abcd'),('y00-llw', '2021-01-01', 355000.00, '00-psrn'),('x00-sxp', '2021-02-01', 500650.00, '00-dqqi'),('z00-xyz','2021-06-25',435555.00,'00-twrp');
 INSERT INTO is_hired VALUES('z00-aml', '00-abcd','PC101'),('y00-llw', '00-psrn','PC102'),('x00-sxp', '00-dqqi','PC103'),('z00-xyz','00-twrp','PC104');
 
+
 drop table Artist cascade;
 drop table Song CASCADE;
 drop table Album cascade;
@@ -91,6 +98,8 @@ drop table Address cascade;
 drop table Contract cascade;
 drop table Publishing_Company cascade;
 drop table is_hired cascade;
+drop table Creates cascade;
+drop table users cascade;
 
 SELECT * FROM Album;
 SELECT * FROM Song;
@@ -100,6 +109,7 @@ SELECT * FROM Address;
 SELECT * FROM Publishing_Company;
 SELECT * FROM Contract;
 SELECT * FROM is_hired;
+SELECT * FROM users;
 
 /*
 1. Display the album name where the no of Artists is more than 1
