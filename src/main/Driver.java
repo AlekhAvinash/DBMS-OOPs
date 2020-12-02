@@ -12,8 +12,7 @@ public class Driver {
 		try {
 			
 			Class.forName("org.postgresql.Driver");
-			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBName", "postgres", "pass");
-			
+			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JavaProject", "postgres", "03012001");
 			//st = connect.createStatement();
 			
 		}
@@ -36,19 +35,20 @@ public class Driver {
 		String username = input.nextLine();
 		String password = input.nextLine();
 		
-		
-		if(admin.login(username, password, connect))
+		if(admin.login(username, password, connect)) {
 			//MENU TO-DO
 			System.out.println(".....Admin Menu Opens Up.....");
-		
-		else if(artist.login(username, password, connect))
+			admin.editProfile(username, password, connect);
+		}
+		else if(artist.login(username, password, connect)) {
 			//MENU TO-DO
 			System.out.println(".....Artist Menu Opens Up.....");
-			
-		else
+			artist.editProfile(username, password, connect);
+		}
+		else {
 			System.out.println("Login Failed.");
 			System.exit(0);
-			
+		}
 	}
 	
 }
