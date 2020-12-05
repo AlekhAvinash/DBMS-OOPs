@@ -29,8 +29,13 @@ public class Driver {
 		
 		Admin admin = new Admin();
 		Artist artist = new Artist();
+
+		Upload ar1=new Upload();
+		EditMusic ar2= new EditMusic();
+
 		ManageAlbum ad1 = new ManageAlbum();
 		ManageTrack ad2 = new ManageTrack();
+
 		
 		Scanner input = new Scanner(System.in);
 		
@@ -55,16 +60,22 @@ public class Driver {
 		else if(artist.login(username, password, connect)) {
 			
 			//MENU TO-DO
-			
 			System.out.println(".....Artist Menu Opens Up.....");
-			
+
 			//artist.editProfile(username, password, connect);
+			//ar1.Publish(connect);
+			//ar2.removeAlbum(connect);
+			//ar2.removeTrack(connect);
+			
+			
+
 		}
 		
 		else {
 			System.out.println("Login Failed.");
 			System.exit(0);
 		}
+		
 	}
 	
 }

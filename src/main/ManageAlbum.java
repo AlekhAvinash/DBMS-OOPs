@@ -5,9 +5,12 @@ import java.util.Scanner;
 
 public class ManageAlbum extends Admin{
 	
-	
+ 	ManageAlbum (Connection c, String uid, String pwd) throws SQLException {
+		super(c);
+        login(uid, pwd);
+    }
+
 	public void removeAlbum(Connection c) throws Exception {
-		
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("Enter Album Name To Remove: ");
@@ -15,7 +18,7 @@ public class ManageAlbum extends Admin{
 		
 		PreparedStatement ps=null;
 		
-		ps=c.prepareStatement("delete from Album where Title = ?;");
+		ps = conn.prepareStatement("delete from Album where Title = ?;");
 		ps.setString(1,title);
 		ps.executeUpdate();
 		System.out.println("Album Removed");
@@ -31,7 +34,7 @@ public class ManageAlbum extends Admin{
 		System.out.println("Enter Album Name : ");
     	String title = input.nextLine();
 		
-		ps=c.prepareStatement("select Album_ID,Title, count(Song_ID) as Song_Count from Song natural join Album where Title = ? group by Album_ID,Title;");
+		ps = conn.prepareStatement("select Album_ID,Title, count(Song_ID) as Song_Count from Song natural join Album where Title = ? group by Album_ID,Title;");
 		ps.setString(1,title);
 		ResultSet rs = ps.executeQuery();
 		
@@ -45,12 +48,6 @@ public class ManageAlbum extends Admin{
 			System.out.println("Album ID: " + albumID);
             System.out.println("Album Name: " + albumName);
             System.out.println("No. of Songs: " + songCount);
-            		
-			
 		}
-			
 	}
-
-	
-
 }
