@@ -5,12 +5,15 @@ import java.util.Scanner;
 
 public class ManageAlbum extends Admin{
 	
+	Connection c = null;
+	
  	ManageAlbum (Connection c, String uid, String pwd) throws SQLException {
+ 		
 		super(c);
         login(uid, pwd);
     }
 
-	public void removeAlbum(Connection c) throws Exception {
+	public void removeAlbum() throws Exception {
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("Enter Album Name To Remove: ");
@@ -25,7 +28,7 @@ public class ManageAlbum extends Admin{
 		
 	}
 	
-	public void getInfo(Connection c) throws Exception{
+	public void getInfo() throws Exception{
 		
 		PreparedStatement ps=null;
 		

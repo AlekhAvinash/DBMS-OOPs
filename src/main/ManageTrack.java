@@ -9,7 +9,8 @@ public class ManageTrack extends Admin {
         super(c);
         login(uid, pwd);
     }
-	public void removeTrack(Connection c) throws Exception {
+    
+	public void removeTrack() throws Exception {
 		
 		Scanner input = new Scanner(System.in);
 		
@@ -26,7 +27,7 @@ public class ManageTrack extends Admin {
 		
 	}
 	
-	public void getInfo(Connection c) throws Exception{
+	public void getInfo() throws Exception{
 		
 		PreparedStatement ps=null;
 		

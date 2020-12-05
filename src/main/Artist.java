@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Artist implements LoginLogout{
+	
 	private static final String STRING = "";
 	Connection conn = null;
 	Statement st = null;

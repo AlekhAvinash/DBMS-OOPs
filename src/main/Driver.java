@@ -4,8 +4,6 @@ import java.util.*;
 
 public class Driver {
 	
-	
-
 	public static void main(String[] args) throws Exception {
 		
 		Connection connect = null;
@@ -14,7 +12,7 @@ public class Driver {
 		try {
 			
 			Class.forName("org.postgresql.Driver");
-			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBName", "postgres", "pass");
+			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusicCompany", "postgres", "dognose1@2");
 			//st = connect.createStatement();
 			
 		}
@@ -27,15 +25,6 @@ public class Driver {
 		
 		System.out.println("CONNECTED TO DATABASE...\n");
 		
-		Admin admin = new Admin();
-		Artist artist = new Artist();
-
-		Upload ar1=new Upload();
-		EditMusic ar2= new EditMusic();
-
-		ManageAlbum ad1 = new ManageAlbum();
-		ManageTrack ad2 = new ManageTrack();
-
 		
 		Scanner input = new Scanner(System.in);
 		
@@ -44,31 +33,39 @@ public class Driver {
 		String username = input.nextLine();
 		String password = input.nextLine();
 		
-		if(admin.login(username, password, connect)) {
+		Admin admin = new Admin(connect);
+		Artist artist = new Artist(connect);
+
+		Upload ar1= new Upload(username,password,connect);
+		EditMusic ar2= new EditMusic(username,password,connect);
+
+		ManageAlbum ad1 = new ManageAlbum(connect,username,password);
+		ManageTrack ad2 = new ManageTrack(connect,username,password);
+		
+		if(admin.login(username, password)) {
 			
 			//MENU TO-DO
 			
 			System.out.println(".....Admin Menu Opens Up.....");
 			
-			//admin.editProfile(username, password, connect);
-			//ad1.removeAlbum(connect);
-			//ad1.getInfo(connect);
-			//ad2.removeTrack(connect);
-			//ad2.getInfo(connect);
+			//admin.editProfile();
+			//ad1.removeAlbum();
+			//ad1.getInfo();
+			//ad2.removeTrack();
+			//ad2.getInfo();
 		}
 		
-		else if(artist.login(username, password, connect)) {
+		else if(artist.login(username, password)) {
 			
 			//MENU TO-DO
+			
 			System.out.println(".....Artist Menu Opens Up.....");
 
-			//artist.editProfile(username, password, connect);
-			//ar1.Publish(connect);
-			//ar2.removeAlbum(connect);
-			//ar2.removeTrack(connect);
+			//artist.editProfile();
+			//ar1.Publish();
+			//ar2.removeAlbum();
+			//ar2.removeTrack();
 			
-			
-
 		}
 		
 		else {

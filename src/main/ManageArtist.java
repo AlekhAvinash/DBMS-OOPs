@@ -4,10 +4,13 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class ManageArtist extends Admin {
+	
     ManageArtist(Connection c, String uid, String pwd) throws SQLException {
+    	
         super(c);
         login(uid, pwd);
     }
+    
     private void line(){System.out.println("----------------------");}
     private void name(){System.out.println("Enter artist name: ");}
 

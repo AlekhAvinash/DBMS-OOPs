@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Admin implements LoginLogout{
+	
 	String uid = "";
 	String pwd = "";
 	Statement st = null;
@@ -12,6 +13,7 @@ public class Admin implements LoginLogout{
 	Scanner input = new Scanner(System.in);
 	
 	Admin(Connection c) {
+		
 		conn = c;
 	}
 
