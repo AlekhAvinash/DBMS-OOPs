@@ -12,7 +12,7 @@ public class Driver {
 		try {
 			
 			Class.forName("org.postgresql.Driver");
-			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JavaProject", "postgres", "03012001");
+			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBName", "postgres", "pass");
 			//st = connect.createStatement();
 			
 		}
@@ -27,6 +27,8 @@ public class Driver {
 		
 		Admin admin = new Admin();
 		Artist artist = new Artist();
+		ManageAlbum ad1 = new ManageAlbum();
+		ManageTrack ad2 = new ManageTrack();
 		
 		Scanner input = new Scanner(System.in);
 		
@@ -36,15 +38,27 @@ public class Driver {
 		String password = input.nextLine();
 		
 		if(admin.login(username, password, connect)) {
+			
 			//MENU TO-DO
+			
 			System.out.println(".....Admin Menu Opens Up.....");
-			admin.editProfile(username, password, connect);
+			
+			//admin.editProfile(username, password, connect);
+			//ad1.removeAlbum(connect);
+			//ad1.getInfo(connect);
+			//ad2.removeTrack(connect);
+			//ad2.getInfo(connect);
 		}
+		
 		else if(artist.login(username, password, connect)) {
+			
 			//MENU TO-DO
+			
 			System.out.println(".....Artist Menu Opens Up.....");
-			artist.editProfile(username, password, connect);
+			
+			//artist.editProfile(username, password, connect);
 		}
+		
 		else {
 			System.out.println("Login Failed.");
 			System.exit(0);
