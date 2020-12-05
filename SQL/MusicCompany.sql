@@ -26,15 +26,15 @@ CREATE TABLE Song(
 	Song_ID VARCHAR(20) PRIMARY KEY,
 	Song_Name VARCHAR(20),
 	Genre VARCHAR(20),
-	Album_ID VARCHAR(20) REFERENCES Album(Album_ID)
+	Album_ID VARCHAR(20) REFERENCES Album(Album_ID) on delete cascade
 
 );
 
 CREATE TABLE Creates(
 
-	Song_ID VARCHAR(20) REFERENCES Song(Song_ID),
-	Album_ID VARCHAR(20) REFERENCES Album(Album_ID),
-	Artist_ID VARCHAR(20) REFERENCES Artist(Artist_ID)
+	Song_ID VARCHAR(20) REFERENCES Song(Song_ID) on delete cascade,
+	Album_ID VARCHAR(20) REFERENCES Album(Album_ID) on delete cascade,
+	Artist_ID VARCHAR(20) REFERENCES Artist(Artist_ID) on delete cascade
 	
 
 );
