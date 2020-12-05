@@ -58,4 +58,5 @@ public class Artist implements LoginLogout{
 		System.out.println("Password updated");
 			
     }
+	
 }
