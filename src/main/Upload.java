@@ -7,7 +7,6 @@ public class Upload extends Artist {
 	
 	public void Publish(Connection c) throws SQLException{
 		Scanner input=new Scanner(System.in);
-		Scanner input2=new Scanner(System.in);
 		
 		System.out.println("Enter album ID");
 		String albumID=input.nextLine();

@@ -12,7 +12,7 @@ public class Driver {
 		try {
 			
 			Class.forName("org.postgresql.Driver");
-			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBName", "postgres", "pass");
+			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JavaProject", "postgres", "03012001");
 			//st = connect.createStatement();
 			
 		}
@@ -30,7 +30,9 @@ public class Driver {
 
 		Upload ar1=new Upload();
 		EditMusic ar2= new EditMusic();
-
+		ViewAnalytics ar3= new ViewAnalytics();
+		
+		
 		ManageAlbum ad1 = new ManageAlbum();
 		ManageTrack ad2 = new ManageTrack();
 
@@ -64,7 +66,7 @@ public class Driver {
 			//ar1.Publish(connect);
 			//ar2.removeAlbum(connect);
 			//ar2.removeTrack(connect);
-			
+			ar3.View(username,connect);
 			
 
 		}
