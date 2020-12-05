@@ -20,14 +20,19 @@ public class Admin implements LoginLogout{
     public boolean login(String uid, String pwd) throws SQLException {
 		st = conn.createStatement();
 		rs = st.executeQuery("SELECT * FROM users");
+		
         while(rs.next()){
+        	
 			if( uid.equals(rs.getString("uid")) && pwd.equals(rs.getString("pwd")) && rs.getString("role").equals("ADMIN") ){
+				
 				this.uid = uid;
 				this.pwd = pwd;
 				return true;
 			}
 		}
+        
 		this.logout(false);
+		
         return false;
     }
 	

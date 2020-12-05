@@ -9,9 +9,9 @@ public class Artist implements LoginLogout{
 	Connection conn = null;
 	Statement st = null;
 	ResultSet rs = null;
-	private String uid = STRING;
-	private String aid = STRING;
-	private String pwd = STRING;
+	protected String uid = STRING;
+	protected String aid = STRING;
+	protected String pwd = STRING;
 	Scanner input = new Scanner(System.in);
 	PreparedStatement ps = null;
 
@@ -20,16 +20,20 @@ public class Artist implements LoginLogout{
 	}
 	
 	public boolean login(String uid, String pwd) throws SQLException{
+		
 		st = conn.createStatement();
 		rs = st.executeQuery("SELECT * FROM users");
 		while(rs.next()){
 			if( uid.equals(rs.getString("uid")) && pwd.equals(rs.getString("pwd")) && rs.getString("role").equals("ARTIST") ){
+				
 				this.uid = uid;
-				this.aid = rs.getString("Artist_ID");
+				//this.aid = rs.getString("Artist_ID");
 				this.pwd = pwd;
+				
 				return true;
 			}
 		}
+		
 		this.logout(false);
 		return false;
 	}
