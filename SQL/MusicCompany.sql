@@ -8,7 +8,7 @@ CREATE TABLE Artist(
 CREATE TABLE Address(
 
 	Address VARCHAR(40) PRIMARY KEY,
-	Artist_ID VARCHAR(20) REFERENCES Artist(Artist_ID)
+	Artist_ID VARCHAR(20) REFERENCES Artist(Artist_ID) ON DELETE CASCADE
 	
 );
 
@@ -59,14 +59,15 @@ CREATE TABLE is_hired(
 
 	Contract_ID VARCHAR(20) REFERENCES Contract(Contract_ID),
 	License_no VARCHAR(10) REFERENCES Publishing_Company(License_no),
-	Artist_ID VARCHAR(20) REFERENCES Artist(Artist_ID)
+	Artist_ID VARCHAR(20) REFERENCES Artist(Artist_ID) ON DELETE CASCADE
 
 );
 
 CREATE TABLE users(
 	uid VARCHAR(20),
 	pwd VARCHAR(20),
-	role VARCHAR(20)
+	role VARCHAR(20),
+	Artist_ID VARCHAR(20) REFERENCES Artist(Artist_ID) ON DELETE CASCADE
 );
 
 INSERT INTO Artist VALUES('PC101','Arjit Singh'),
@@ -86,7 +87,7 @@ INSERT INTO Song VALUES( 'S100','Tum-Hi-Ho','Romantic','A1'),
 
 INSERT INTO Creates VALUES('S100','A1','PC101'),('S101','A2','PC102'),('S103','A1','PC103'),('S104','A3','PC104');
 
-insert into users values('ABC','1234','ADMIN'),('XYZ','4321','ARTIST');
+insert into users values('ABC','1234','ADMIN',null),('XYZ','4321','ARTIST','PC101');
 
 INSERT INTO Publishing_Company VALUES('00-abcd', 'SunderLandInt'),('00-psrn', 'MilestoneMusic'), ('00-dqqi', 'KoverMinesInt'),('00-twrp','T-Series');
 INSERT INTO Contract VALUES('z00-aml', '2021-05-21', 225000.00, '00-abcd'),('y00-llw', '2021-01-01', 355000.00, '00-psrn'),('x00-sxp', '2021-02-01', 500650.00, '00-dqqi'),('z00-xyz','2021-06-25',435555.00,'00-twrp');
