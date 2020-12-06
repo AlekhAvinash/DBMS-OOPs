@@ -5,7 +5,12 @@ import java.util.Scanner;
 
 public class ManageTrack extends Admin {
 
-	public void removeTrack(Connection c) throws Exception {
+    ManageTrack(Connection c, String uid, String pwd) throws SQLException {
+        super(c);
+        login(uid, pwd);
+    }
+    
+	public void removeTrack() throws Exception {
 		
 		Scanner input = new Scanner(System.in);
 		
@@ -14,7 +19,7 @@ public class ManageTrack extends Admin {
 		
 		PreparedStatement ps=null;
 		
-		ps=c.prepareStatement("delete from Song where Song_Name = ?;");
+		ps = conn.prepareStatement("delete from Song where Song_Name = ?;");
 		ps.setString(1,trackName);
 		ps.executeUpdate();
 		System.out.println("Track Removed");
@@ -22,7 +27,7 @@ public class ManageTrack extends Admin {
 		
 	}
 	
-	public void getInfo(Connection c) throws Exception{
+	public void getInfo() throws Exception{
 		
 		PreparedStatement ps=null;
 		
@@ -31,7 +36,7 @@ public class ManageTrack extends Admin {
 		System.out.println("Enter Track Name : ");
     	String trackName = input.nextLine();
 		
-		ps=c.prepareStatement("select Album_ID ,Title,Song_Name,Artist_Name,copyright from Artist natural join Album natural join Song natural join Creates where Song_Name = ?;");
+		ps = conn.prepareStatement("select Album_ID ,Title,Song_Name,Artist_Name,copyright from Artist natural join Album natural join Song natural join Creates where Song_Name = ?;");
 		ps.setString(1,trackName);
 		ResultSet rs = ps.executeQuery();
 		

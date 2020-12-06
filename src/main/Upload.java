@@ -5,7 +5,17 @@ import java.util.Scanner;
 
 public class Upload extends Artist {
 	
-	public void Publish(Connection c) throws SQLException{
+	Statement statement = null;
+	Connection c = null;
+	
+	Upload(String uid,String pwd,Connection c) throws Exception {
+		
+		super(c);
+		login(uid,pwd);
+		
+	}
+
+	public void Publish() throws SQLException{
 		Scanner input=new Scanner(System.in);
 		
 		System.out.println("Enter album ID");
@@ -46,7 +56,8 @@ public class Upload extends Artist {
 			ps1.setString(3, genre);
 			ps1.setString(4, albumID);
 			
-			if(verify(songName,c)) {
+			if(verify(songName)) {
+				
 				ps1.executeUpdate();
 				System.out.println("----Song published----");
 			}
@@ -57,7 +68,7 @@ public class Upload extends Artist {
 		
 	}
 	
-	public boolean verify(String songName, Connection c) throws SQLException{
+	public boolean verify(String songName) throws SQLException{
     	
     	statement = c.createStatement();
     	

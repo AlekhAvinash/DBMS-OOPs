@@ -4,7 +4,16 @@ import java.sql.*;
 import java.util.Scanner;
 public class EditMusic extends Artist{
 	
-	public void removeAlbum(Connection c) throws Exception {
+	Connection c = null;
+	
+	EditMusic(String uid,String pwd,Connection c) throws Exception {
+		
+		super(c);
+		login(uid,pwd);
+		
+	}
+
+	public void removeAlbum() throws Exception {
         
         Scanner input = new Scanner(System.in);
         
@@ -20,7 +29,7 @@ public class EditMusic extends Artist{
         
     }
 	
-	public void removeTrack(Connection c) throws Exception {
+	public void removeTrack() throws Exception {
         
 		Scanner input = new Scanner(System.in);
         
