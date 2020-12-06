@@ -16,7 +16,7 @@ public class Driver {
 		try {
 			
 			Class.forName("org.postgresql.Driver");
-			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusicCompany", "postgres", "dognose1@2");
+			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusicCompany", "postgres", "pass");
 			//st = connect.createStatement();
 			
 		}
