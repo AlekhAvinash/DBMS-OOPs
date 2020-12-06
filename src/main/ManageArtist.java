@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -10,8 +12,15 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+import javax.swing.table.DefaultTableModel;
 
+import main.Driver;
 import main.Admin.editProfileGUIadmin;
 
 public class ManageArtist extends Admin {
@@ -25,20 +34,95 @@ public class ManageArtist extends Admin {
     private void line(){System.out.println("----------------------");}
     private void name(){System.out.println("Enter artist name: ");}
 
-public void ManageArtistUI(JFrame fr,String uid,String pass) {
+public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
 		
-		JMenu menu;  
-	    JMenuItem a1,a2;
-	      
-	    menu = new JMenu("Home");
-	    JMenuBar m1 = new JMenuBar();
-	    a1 = new JMenu("Option");
-	    a2 = new JMenu("Logout");
-	    m1.add(menu);
-	    m1.add(a1);
-	    m1.add(a2);
-	      
-	    fr.setJMenuBar(m1);
+	JMenu menu;  
+    JMenu a1,a2;
+      
+    menu = new JMenu("Home");
+    JMenuBar m1 = new JMenuBar();
+    a1 = new JMenu("Menu");
+    a2 = new JMenu("Logout");
+    m1.add(menu);
+    m1.add(a1);
+    m1.add(a2);
+      
+    fr.setJMenuBar(m1);
+   
+	a1.addMenuListener(new MenuListener() {
+
+		@Override
+		public void menuCanceled(MenuEvent e) {
+			
+			
+		}
+
+		@Override
+		public void menuDeselected(MenuEvent e) {
+			
+			
+		}
+
+		@Override
+		public void menuSelected(MenuEvent e) {
+			
+		int result = JOptionPane.showConfirmDialog(fr,"Sure? You want to Go to Menu?", "Confirm",
+		               JOptionPane.YES_NO_OPTION,
+		               JOptionPane.QUESTION_MESSAGE);
+			
+		            if(result == JOptionPane.YES_OPTION){
+		              
+		            	//System.out.println("JMenu Clicked.");
+						Admin ad = new Admin(c);
+						JFrame newFr = new JFrame("Admin");
+						ad.AdminGUI(newFr, uid, pass,c);
+						fr.setVisible(false);
+		            	
+		            	
+		            }else if (result == JOptionPane.NO_OPTION){
+		            	
+		       
+		            }
+		            
+		            else {
+		               
+		            	
+		            }
+		            
+		}
+		
+	});
+	
+	a2.addMenuListener(new MenuListener() {
+
+		@Override
+		public void menuCanceled(MenuEvent e) {
+			
+			
+		}
+
+		@Override
+		public void menuDeselected(MenuEvent e) {
+			
+			
+		}
+
+		@Override
+		public void menuSelected(MenuEvent e) {
+			
+			JOptionPane.showMessageDialog(fr, "Logged Out Successfully", "Success", JOptionPane.OK_CANCEL_OPTION);
+			
+			//System.out.println("JMenu Clicked.");
+			Admin ad = new Admin(c);
+			Artist ar = new Artist(c);
+			Driver d = new Driver();
+			fr.setVisible(false);
+			Driver.LoginUI(ad, ar, c);
+			
+			
+		}
+		
+	});
 		
 		JPanel panel = new JPanel();
 		fr.add(panel);
@@ -186,6 +270,7 @@ public void ManageArtistUI(JFrame fr,String uid,String pass) {
     }
 
     private void printAlbums(String id) throws SQLException {
+    	
         System.out.println("Artist Album Details: ");
         ps = conn.prepareStatement("select * from Artist natural join Creates natural join album where artist_id=?");
         ps.setString(1,id);
@@ -202,19 +287,23 @@ public void ManageArtistUI(JFrame fr,String uid,String pass) {
     }
 
     private void printContracts(String id) throws SQLException {
+    	
         System.out.println("Artist Album Details: ");
         ps = conn.prepareStatement("select * from Artist natural join is_hired natural join contract where artist_id=?");
         ps.setString(1,id);
         rs = ps.executeQuery();
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
+        
         while (rs.next()) {
+        	
             for (int i = 1; i <= columnsNumber; i++) {
+            	
                 String columnValue = rs.getString(i);
-                System.out.println("==> " + rsmd.getColumnName(i)+ "\t" + columnValue);
+                //System.out.println("==> " + rsmd.getColumnName(i)+ "\t" + columnValue);
             }
         }
-        line();
+        
     }
 
     public void getInfo() throws SQLException {
@@ -232,4 +321,119 @@ public void ManageArtistUI(JFrame fr,String uid,String pass) {
         printContracts(id);
         
     }
+    
+    public void getInfo(String title,Connection conn,String uid,String pass) throws Exception{
+		
+		JFrame fr=new JFrame("Results");
+		
+		JMenu menu;  
+	    JMenu a1,a2;
+	      
+	    menu = new JMenu("Home");
+	    JMenuBar m1 = new JMenuBar();
+	    a1 = new JMenu("Menu");
+	    a2 = new JMenu("Logout");
+	    m1.add(menu);
+	    m1.add(a1);
+	    m1.add(a2);
+	      
+	    fr.setJMenuBar(m1);
+	   
+		a1.addMenuListener(new MenuListener() {
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				
+				
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				
+				
+			}
+
+			@Override
+			public void menuSelected(MenuEvent e) {
+				
+			int result = JOptionPane.showConfirmDialog(fr,"Sure? You want to Go to Menu?", "Confirm",
+			               JOptionPane.YES_NO_OPTION,
+			               JOptionPane.QUESTION_MESSAGE);
+				
+			            if(result == JOptionPane.YES_OPTION){
+			              
+			            	//System.out.println("JMenu Clicked.");
+							Admin ad = new Admin(conn);
+							JFrame newFr = new JFrame("Admin");
+							ad.AdminGUI(newFr, uid, pass,conn);
+							fr.setVisible(false);
+			            	
+			            	
+			            }else if (result == JOptionPane.NO_OPTION){
+			            	
+			       
+			            }
+			            
+			            else {
+			               
+			            	
+			            }
+			            
+			}
+			
+		});
+		
+		a2.addMenuListener(new MenuListener() {
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				
+				
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				
+				
+			}
+
+			@Override
+			public void menuSelected(MenuEvent e) {
+				
+				JOptionPane.showMessageDialog(fr, "Logged Out Successfully", "Success", JOptionPane.OK_CANCEL_OPTION);
+				
+				//System.out.println("JMenu Clicked.");
+				Admin ad = new Admin(conn);
+				Artist ar = new Artist(conn);
+				Driver d = new Driver();
+				fr.setVisible(false);
+				Driver.LoginUI(ad, ar, conn);
+				
+				
+			}
+			
+		});
+		
+		
+		JPanel panel = new JPanel();
+		fr.add(panel);
+		
+		panel.setLayout(new FlowLayout());
+		panel.setSize(800,600);
+        
+        DefaultTableModel dtm = new DefaultTableModel();
+        JTable table = new JTable(dtm);
+        
+        table.setPreferredScrollableViewportSize(new Dimension(800, 600));
+        table.setFillsViewportHeight(true);
+        
+        panel.add(new JScrollPane(table));
+        dtm.addColumn("");
+        dtm.addColumn("");
+        dtm.addColumn("");
+		
+		fr.setLayout(null);
+        fr.setSize(800, 600);
+        fr.setVisible(true);
+	}
 }

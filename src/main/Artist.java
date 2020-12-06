@@ -6,6 +6,10 @@ import java.sql.*;
 import java.util.Scanner;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+
+import main.Driver;
 
 public class Artist implements LoginLogout{
 	
@@ -25,20 +29,62 @@ public class Artist implements LoginLogout{
 		
 	}
 	
-	public void ArtistUI(JFrame fr,String uid, String pass) {
+	public void ArtistUI(JFrame fr,String uid, String pass,Connection conn) {
 		
 		JMenu menu;  
-	    JMenuItem a1,a2;
+	    JMenu a1,a2;
 	      
 	    menu = new JMenu("Home");
 	    JMenuBar m1 = new JMenuBar();
-	    //a1 = new JMenu("Option");
-	    a2 = new JMenu("Logout");
+	    a1 = new JMenu("Logout");
 	    m1.add(menu);
-	    //m1.add(a1);
-	    m1.add(a2);
+	    m1.add(a1);
 	      
 	    fr.setJMenuBar(m1);
+	   
+		a1.addMenuListener(new MenuListener() {
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				
+				
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				
+				
+			}
+
+			@Override
+			public void menuSelected(MenuEvent e) {
+				
+			int result = JOptionPane.showConfirmDialog(fr,"Do you want to Exit?", "Confirm",
+			               JOptionPane.YES_NO_OPTION,
+			               JOptionPane.QUESTION_MESSAGE);
+				
+			            if(result == JOptionPane.YES_OPTION){
+			              
+			            	Admin ad = new Admin(conn);
+							Artist ar = new Artist(conn);
+							Driver d = new Driver();
+							fr.setVisible(false);
+							Driver.LoginUI(ad, ar, conn);
+			            	
+			            }else if (result == JOptionPane.NO_OPTION){
+			            	
+			       
+			            }
+			            
+			            else {
+			               
+			            	
+			            }
+			            
+			}
+			
+		});
+		
 		
 		JPanel panel = new JPanel();
 		fr.add(panel);
@@ -55,6 +101,8 @@ public class Artist implements LoginLogout{
 		b2.setBounds(300,250,150,25);
 		b3.setBounds(300,300,150,25);
 		b4.setBounds(300,350,150,25);
+		
+		
 		
 		b1.addActionListener(new ActionListener() {
 
@@ -77,7 +125,7 @@ public class Artist implements LoginLogout{
 					
 					Upload ar = new Upload(uid,pass,conn);
 					JFrame newFr = new JFrame("Upload: ");
-					ar.UploadUI(newFr, uid, pass);
+					ar.UploadUI(newFr, uid, pass,conn);
 					fr.setVisible(false);
 					
 				} catch (Exception e) {
@@ -278,17 +326,93 @@ public class Artist implements LoginLogout{
 			fr.add(panel);
 			
 			JMenu menu;  
-		    JMenuItem a1,a2;
+		    JMenu a1,a2;
 		      
 		    menu = new JMenu("Home");
 		    JMenuBar m1 = new JMenuBar();
-		    a1 = new JMenu("Option");
+		    a1 = new JMenu("Menu");
 		    a2 = new JMenu("Logout");
 		    m1.add(menu);
 		    m1.add(a1);
 		    m1.add(a2);
 		      
 		    fr.setJMenuBar(m1);
+		   
+			a1.addMenuListener(new MenuListener() {
+
+				@Override
+				public void menuCanceled(MenuEvent e) {
+					
+					
+				}
+
+				@Override
+				public void menuDeselected(MenuEvent e) {
+					
+					
+				}
+
+				@Override
+				public void menuSelected(MenuEvent e) {
+					
+				int result = JOptionPane.showConfirmDialog(fr,"Sure? You want to Go to Menu?", "Confirm",
+				               JOptionPane.YES_NO_OPTION,
+				               JOptionPane.QUESTION_MESSAGE);
+					
+				            if(result == JOptionPane.YES_OPTION){
+				              
+				            	//System.out.println("JMenu Clicked.");
+								Artist ar = new Artist(c);
+								JFrame newFr = new JFrame("Admin");
+								ar.ArtistUI(newFr, uid, pass,c);
+								fr.setVisible(false);
+				            	
+				            	
+				            }else if (result == JOptionPane.NO_OPTION){
+				            	
+				       
+				            }
+				            
+				            else {
+				               
+				            	
+				            }
+				            
+				}
+				
+			});
+			
+			a2.addMenuListener(new MenuListener() {
+
+				@Override
+				public void menuCanceled(MenuEvent e) {
+					
+					
+				}
+
+				@Override
+				public void menuDeselected(MenuEvent e) {
+					
+					
+				}
+
+				@Override
+				public void menuSelected(MenuEvent e) {
+					
+					JOptionPane.showMessageDialog(fr, "Logged Out Successfully", "Success", JOptionPane.OK_CANCEL_OPTION);
+					
+					//System.out.println("JMenu Clicked.");
+					Admin ad = new Admin(c);
+					Artist ar = new Artist(c);
+					Driver d = new Driver();
+					fr.setVisible(false);
+					Driver.LoginUI(ad, ar, c);
+					
+					
+				}
+				
+			});
+			
 			
 				
 			panel.setLayout(null);
@@ -313,13 +437,13 @@ public class Artist implements LoginLogout{
 						
 						if(ar.editProfileUid(newUid,uid)) {
 							
-							JOptionPane.showMessageDialog(null, "Username Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Username Updated", "Success", JOptionPane.PLAIN_MESSAGE);
 							
 						}
 						
 						else {
 							
-							JOptionPane.showMessageDialog(null, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
 							
 						}	
 						
@@ -343,13 +467,13 @@ public class Artist implements LoginLogout{
 						
 						if(ar.editProfilePwd(newPass,uid)) {
 							
-							JOptionPane.showMessageDialog(null, "Password Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Password Updated", "Success", JOptionPane.PLAIN_MESSAGE);
 							
 						}
 						
 						else {
 							
-							JOptionPane.showMessageDialog(null, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
 							
 						}
 						
@@ -371,13 +495,13 @@ public class Artist implements LoginLogout{
 						String newAdd = text3.getText();
 						if(ar.editProfileAddr(newAdd,uid)) {
 							
-							JOptionPane.showMessageDialog(null, "Address Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Address Updated", "Success", JOptionPane.PLAIN_MESSAGE);
 							
 						}
 						
 						else {
 							
-							JOptionPane.showMessageDialog(null, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
 							
 						}
 						
