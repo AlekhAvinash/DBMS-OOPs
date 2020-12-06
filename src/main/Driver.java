@@ -38,13 +38,6 @@ public class Driver {
 		
 	}
 	
-public static void newFrame(JFrame fr) {
-	
-	fr.setSize(800, 600);
-	fr.setVisible(true);
-			
-}
-	
 public static void LoginUI(Admin admin,Artist artist,Connection c) {
 		
 		JFrame frame = new JFrame();
@@ -102,10 +95,10 @@ public static void LoginUI(Admin admin,Artist artist,Connection c) {
 					
 					if(admin.login(userName, Pwd)) {
 						
+						JFrame s = new JFrame("Admin");
+						admin.AdminGUI(s,userName,Pwd);
 						username.setText(null);
 						password1.setText(null);
-						JFrame s = new JFrame("Admin");
-						newFrame(s);
 						frame.setVisible(false);
 						
 						//MENU TO-DO
@@ -159,8 +152,7 @@ public static void LoginUI(Admin admin,Artist artist,Connection c) {
 						password1.setText(null);
 						
 						JFrame a = new JFrame("Artist");
-						newFrame(a);
-						
+						artist.ArtistUI(a,userName,Pwd);
 						frame.setVisible(false);
 						
 						//MENU TO-DO
