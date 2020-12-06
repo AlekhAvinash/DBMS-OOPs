@@ -66,7 +66,7 @@ public class Driver {
 			//ar1.Publish(connect);
 			//ar2.removeAlbum(connect);
 			//ar2.removeTrack(connect);
-			ar3.View(username,connect);
+			//ar3.View(username,connect);
 			
 
 		}
