@@ -135,10 +135,10 @@ public void ManageTracksUI(JFrame fr,String uid,String pass,Connection c) {
 		    t2.setBounds(200, 200, 200, 25);
 		    
 		    JLabel l1 = new JLabel("Song Name:");
-		    l1.setBounds(140,100 , 100, 25);
+		    l1.setBounds(100,100 , 100, 25);
 		    
 		    JLabel l2 = new JLabel("Song Name:");
-		    l2.setBounds(140, 200, 100, 25);
+		    l2.setBounds(100, 200, 100, 25);
 		
 		JButton b1 = new JButton("Remove Track");
 		JButton b2 = new JButton("Get-Info");

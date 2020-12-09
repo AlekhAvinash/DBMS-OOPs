@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -16,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.table.DefaultTableModel;
@@ -124,24 +127,84 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
 		
 	});
 		
-		JPanel panel = new JPanel();
-		fr.add(panel);
-			
-		panel.setLayout(null);
-		fr.setAlwaysOnTop(true);
+	JPanel panel = new JPanel();
+	fr.add(panel);
 		
-		JButton b1 = new JButton("Add Artist");
-		JButton b2 = new JButton("Remove Artist");
-		JButton b3 = new JButton("Get-Info");
-		
-		b1.setBounds(300,200,150,25);
-		b2.setBounds(300,250,150,25);
-		b3.setBounds(300,300,150,25);
+	panel.setLayout(null);
+    fr.setAlwaysOnTop(true);
+    
+    JTextField t1 = new JTextField();
+    t1.setBounds(200, 100, 200, 25);
+    
+    JTextField t2 = new JTextField();
+    t2.setBounds(200, 210, 200, 25);
+    
+    JTextField t3 = new JTextField();
+    t3.setBounds(200, 310, 200, 25);
+    
+    JTextField t4 = new JTextField();
+    t4.setBounds(200,130,200,25);
+    
+    JLabel l1 = new JLabel("Artist ID:");
+    l1.setBounds(100,100 , 100, 25);
+
+    JLabel l2 = new JLabel("Artist ID:");
+    l2.setBounds(100, 210 , 100, 25);
+    
+    JLabel l3 = new JLabel("Artist ID:");
+    l3.setBounds(100, 310, 100, 25);
+    
+    JLabel l4 = new JLabel("Artist Name :");
+    l4.setBounds(100, 130, 100, 25);
+    
+    JButton b1 = new JButton("Add Artist");
+    JButton b2 = new JButton("Remove Artist");
+    JButton b3 = new JButton("Get-Info");
+    
+    b1.setBounds(450,125,150,25);
+    b2.setBounds(450,210,150,25);
+    b3.setBounds(450,310,150,25);
+    
+    panel.add(t1);
+    panel.add(b1);
+    panel.add(t4);
+    panel.add(t2);
+    panel.add(b2);
+    panel.add(t3);
+    panel.add(b3);
+    panel.add(l1);
+    panel.add(l2);
+    panel.add(l3);
+    panel.add(l4);
+    
+    panel.setSize(800, 600);
 		
 		b1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
+				String id = t1.getText();
+				String name = t4.getText();
+				
+				try {
+					
+					if(insertartist(name,id)) {
+						
+						JOptionPane.showMessageDialog(fr, "Artist Added", "Success", JOptionPane.PLAIN_MESSAGE);
+						
+					}
+					
+					else {
+						
+						JOptionPane.showMessageDialog(fr, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+						
+					}
+					
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}
 				
 				
 				
@@ -154,6 +217,24 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
+				String id = t2.getText();
+				
+				try {
+					if(removeArtist(id)) {
+						
+						JOptionPane.showMessageDialog(fr, "Artist Removed", "Success", JOptionPane.PLAIN_MESSAGE);
+						
+					}
+					
+					else {
+						
+						JOptionPane.showMessageDialog(fr, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+						
+					}
+				} catch (HeadlessException | SQLException e) {
+					
+					e.printStackTrace();
+				}
 				
 			}
 			
@@ -164,7 +245,17 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-
+				String id = t3.getText();
+				
+				try {
+					
+					getInfo(id,c,uid,pass);
+					fr.setVisible(false);
+					
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}
 				
 			}
 			
@@ -181,6 +272,7 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
 	}
     
     private String newId(String name) throws SQLException {
+    	
         String id = "";
         rs = st.executeQuery("select * from artist");
         while(rs.next()){
@@ -201,11 +293,22 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
 		ps.executeUpdate();
     }
 
-    private void insertartist(String name, String aid) throws SQLException {
-        ps = conn.prepareStatement("INSERT INTO artist VALUES (?, ?)");
-        ps.setString(1,aid);
-        ps.setString(2,name);
-		ps.executeUpdate();
+    private boolean insertartist(String name, String aid) throws SQLException {
+    	
+    	if(name.equals("") || aid.equals("")) {
+    		
+    		return false;
+    	}
+    	
+    	else {
+    		
+	        ps = conn.prepareStatement("INSERT INTO artist VALUES (?, ?)");
+	        ps.setString(1,aid);
+	        ps.setString(2,name);
+			ps.executeUpdate();
+			
+			return true;
+	    }
     }
 
     private void insertaddr(String aid, String addr) throws SQLException {
@@ -216,6 +319,7 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
     }
 
     public void addArtist() throws SQLException {
+    	
         System.out.println("Enter artist name and password: ");
         String name = input.nextLine();
         String pwd = input.nextLine();
@@ -230,6 +334,7 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
     }
 
     private String getId(String name) throws SQLException {
+    	
         String id="";
         rs = st.executeQuery("select * from artist");
         while(rs.next()){
@@ -244,16 +349,24 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
         return id;
     }
 
-    public void removeArtist() throws SQLException {
-        name();
-        String name = input.nextLine();
-        String id = getId(name);
-        ps = conn.prepareStatement("delete from artist where artist_id=?");
-        ps.setString(1,id);
-		ps.executeUpdate();
+    public boolean removeArtist(String id) throws SQLException {
+    	
+    	if(id.equals("")) {
+    		return false;
+    	}
+    	
+    	else {
+    		
+	        ps = conn.prepareStatement("delete from artist where artist_id=?");
+	        ps.setString(1,id);
+			ps.executeUpdate();
+			
+			return true;
+	    }
     }
 
     private void printSongs(String id) throws SQLException {
+    	
         System.out.println("Artist Song Details: ");
         ps = conn.prepareStatement("select * from Artist natural join Creates natural join song where artist_id=?");
         ps.setString(1,id);
@@ -288,7 +401,7 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
 
     private void printContracts(String id) throws SQLException {
     	
-        System.out.println("Artist Album Details: ");
+    
         ps = conn.prepareStatement("select * from Artist natural join is_hired natural join contract where artist_id=?");
         ps.setString(1,id);
         rs = ps.executeQuery();
@@ -297,11 +410,18 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
         
         while (rs.next()) {
         	
-            for (int i = 1; i <= columnsNumber; i++) {
-            	
-                String columnValue = rs.getString(i);
-                //System.out.println("==> " + rsmd.getColumnName(i)+ "\t" + columnValue);
-            }
+       
+            String contractID = rs.getString(1);
+            String licenseNo = rs.getString(2);
+            String artistID = rs.getString(3);
+            String artistName = rs.getString(4);
+            String contract_Expriry = rs.getString(5);
+            String wages = rs.getString(6);
+            
+            //System.out.println("==> " + rsmd.getColumnName(i)+ "\t" + columnValue);
+            
+           
+            
         }
         
     }
@@ -322,7 +442,7 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
         
     }
     
-    public void getInfo(String title,Connection conn,String uid,String pass) throws Exception{
+    public void getInfo(String id,Connection conn,String uid,String pass) throws Exception{
 		
 		JFrame fr=new JFrame("Results");
 		
@@ -428,11 +548,38 @@ public void ManageArtistUI(JFrame fr,String uid,String pass,Connection c) {
         table.setFillsViewportHeight(true);
         
         panel.add(new JScrollPane(table));
-        dtm.addColumn("");
-        dtm.addColumn("");
-        dtm.addColumn("");
+        dtm.addColumn("Artist ID");
+        dtm.addColumn("Artist Name");
+        dtm.addColumn("Contract ID");
+        dtm.addColumn("License No");
+        dtm.addColumn("Contract Expiry");
+        dtm.addColumn("Wages");
 		
-		fr.setLayout(null);
+        
+        ps = conn.prepareStatement("select * from Artist natural join is_hired natural join contract where artist_id=?");
+        ps.setString(1,id);
+        rs = ps.executeQuery();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+        
+        while (rs.next()) {
+        	
+       
+            String contractID = rs.getString(1);
+            String licenseNo = rs.getString(2);
+            String artistID = rs.getString(3);
+            String artistName = rs.getString(4);
+            String contract_Expiry = rs.getString(5);
+            String wages = rs.getString(6);
+            
+            //System.out.println("==> " + rsmd.getColumnName(i)+ "\t" + columnValue);
+            
+            dtm.addRow(new Object[] {artistID,artistName,contractID,licenseNo,contract_Expiry,wages});
+           
+            
+        }
+        
+        fr.setLayout(null);
         fr.setSize(800, 600);
         fr.setVisible(true);
 	}

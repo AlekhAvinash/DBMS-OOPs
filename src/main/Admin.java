@@ -1,4 +1,5 @@
 package main;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -37,6 +38,7 @@ public class Admin implements LoginLogout{
 	    m1.add(a1);
 	      
 	    fr.setJMenuBar(m1);
+	    
 	   
 		a1.addMenuListener(new MenuListener() {
 
@@ -84,6 +86,23 @@ public class Admin implements LoginLogout{
 		
 		JPanel panel = new JPanel();
 		fr.add(panel);
+		
+		JLabel l = new JLabel("Home");
+		l.setBounds(330, 50, 80, 75);
+		
+		Font labelFont = l.getFont();
+		String labelText = l.getText();
+
+		int stringWidth = l.getFontMetrics(labelFont).stringWidth(labelText);
+		int componentWidth = l.getWidth();
+
+		double widthRatio = (double)componentWidth / (double)stringWidth;
+
+		int newFontSize = (int)(labelFont.getSize() * widthRatio);
+		int componentHeight = l.getHeight();
+		int fontSizeToUse = Math.min(newFontSize, componentHeight);
+
+		l.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
 			
 		panel.setLayout(null);
 		fr.setAlwaysOnTop(true);
@@ -131,7 +150,7 @@ public class Admin implements LoginLogout{
 			}
 			
 		});
-		
+
 		b3.addActionListener(new ActionListener() {
 
 			@Override
@@ -176,6 +195,7 @@ public class Admin implements LoginLogout{
 			
 		});
 		
+		panel.add(l);
 		panel.add(b1);
 		panel.add(b2);
 		panel.add(b3);
@@ -288,16 +308,16 @@ public class Admin implements LoginLogout{
 			Admin ad = new Admin(c);
 			
 			JLabel label = new JLabel("Enter New ID:");
-			label.setBounds(200,200,100,25);
+			label.setBounds(100,100,100,25);
 			
 			JTextField text =  new JTextField();
-			text.setBounds(310,200,200,25);
+			text.setBounds(210,100,200,25);
 			
 			JLabel label2 = new JLabel("Enter New Pass:");
-			label2.setBounds(200,300,100,25);
+			label2.setBounds(100,200,100,25);
 			
 			JTextField text2 =  new JTextField();
-			text2.setBounds(310,300,200,25);
+			text2.setBounds(210,200,200,25);
 			
 			JPanel panel = new JPanel();
 			fr.add(panel);
@@ -397,8 +417,8 @@ public class Admin implements LoginLogout{
 			JButton b1 = new JButton("Edit User-ID");
 			JButton b2 = new JButton("Change Password");
 			
-			b1.setBounds(520,200,150,25);
-			b2.setBounds(520,300,150,25);
+			b1.setBounds(450,100,150,25);
+			b2.setBounds(450,200,150,25);
 			
 			b1.addActionListener(new ActionListener() {
 

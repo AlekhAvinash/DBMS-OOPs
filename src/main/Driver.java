@@ -16,7 +16,9 @@ public class Driver {
 		try {
 			
 			Class.forName("org.postgresql.Driver");
+
 			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusicCompany", "postgres", "dognose1@2");
+
 			//st = connect.createStatement();
 			
 		}
@@ -52,7 +54,7 @@ public static void LoginUI(Admin admin,Artist artist,Connection c) {
 		frame.setAlwaysOnTop(true);
 		
 		JLabel l = new JLabel("Login");
-		l.setBounds(320, 10, 80, 75);
+		l.setBounds(330, 10, 80, 75);
 		
 		Font labelFont = l.getFont();
 		String labelText = l.getText();
@@ -204,10 +206,8 @@ public static void LoginUI(Admin admin,Artist artist,Connection c) {
 /*
 Scanner input = new Scanner(System.in);
 System.out.println("Enter Username & Password : \n");
-
 String userid = input.nextLine();
 String passwd = input.nextLine();
-
 */
 
 /*if(admin.login(userid, passwd)) {
@@ -222,25 +222,20 @@ String passwd = input.nextLine();
 	//ad2.removeTrack();
 	//ad2.getInfo();
 }
-
 else if(artist.login(userid, passwd)) {
 	
 	//MENU TO-DO
 	
 	System.out.println(".....Artist Menu Opens Up.....");
-
 	//artist.editProfile();
 	//ar1.Publish();
 	//ar2.removeAlbum();
 	//ar2.removeTrack();
 	
 }
-
 else {
 	
 	System.out.println("Login Failed.");
 	System.exit(0);
 }*/
-
-
 
