@@ -4,6 +4,10 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.Scanner;
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+
+import main.Driver;
 
 public class Admin implements LoginLogout{
 	
@@ -21,20 +25,62 @@ public class Admin implements LoginLogout{
 		
 	}
 	
-	public void AdminGUI(JFrame fr,String uid,String pass) {
+	public void AdminGUI(JFrame fr,String uid,String pass,Connection conn) {
 		
 		JMenu menu;  
-	    JMenuItem a1,a2;
+	    JMenu a1,a2;
 	      
 	    menu = new JMenu("Home");
 	    JMenuBar m1 = new JMenuBar();
-	    //a1 = new JMenu("Option");
-	    a2 = new JMenu("Logout");
+	    a1 = new JMenu("Logout");
 	    m1.add(menu);
-	    //m1.add(a1);
-	    m1.add(a2);
+	    m1.add(a1);
 	      
 	    fr.setJMenuBar(m1);
+	   
+		a1.addMenuListener(new MenuListener() {
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				
+				
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				
+				
+			}
+
+			@Override
+			public void menuSelected(MenuEvent e) {
+				
+			int result = JOptionPane.showConfirmDialog(fr,"Do you want to Exit?", "Confirm",
+			               JOptionPane.YES_NO_OPTION,
+			               JOptionPane.QUESTION_MESSAGE);
+				
+			            if(result == JOptionPane.YES_OPTION){
+			              
+			            	Admin ad = new Admin(conn);
+							Artist ar = new Artist(conn);
+							Driver d = new Driver();
+							fr.setVisible(false);
+							Driver.LoginUI(ad, ar, conn);
+			            	
+			            }else if (result == JOptionPane.NO_OPTION){
+			            	
+			       
+			            }
+			            
+			            else {
+			               
+			            	
+			            }
+			            
+			}
+			
+		});
+		
 		
 		JPanel panel = new JPanel();
 		fr.add(panel);
@@ -74,7 +120,7 @@ public class Admin implements LoginLogout{
 					ManageArtist ad = new ManageArtist(conn,uid,pass);
 					//DO HERE
 					JFrame newFr = new JFrame("Manage Artist");
-					ad.ManageArtistUI(newFr, uid, pass);
+					ad.ManageArtistUI(newFr, uid, pass,conn);
 					fr.setVisible(false);
 					
 				} catch (Exception e) {
@@ -95,7 +141,7 @@ public class Admin implements LoginLogout{
 					
 					ManageAlbum ad = new ManageAlbum(conn,uid,pass);
 					JFrame newFr = new JFrame("Manage Album");
-					ad.ManageAlbumUI(newFr, uid, pass);
+					ad.ManageAlbumUI(newFr, uid, pass,conn);
 					fr.setVisible(false);
 					
 					
@@ -117,7 +163,7 @@ public class Admin implements LoginLogout{
 					
 					ManageTrack ad = new ManageTrack(conn,uid,pass);
 					JFrame newFr = new JFrame("Manage Tracks");
-					ad.ManageTracksUI(newFr, uid, pass);
+					ad.ManageTracksUI(newFr, uid, pass,conn);
 					fr.setVisible(false);
 					
 					
@@ -257,17 +303,92 @@ public class Admin implements LoginLogout{
 			fr.add(panel);
 			
 			JMenu menu;  
-		    JMenuItem a1,a2;
+		    JMenu a1,a2;
 		      
 		    menu = new JMenu("Home");
 		    JMenuBar m1 = new JMenuBar();
-		    a1 = new JMenu("Option");
+		    a1 = new JMenu("Menu");
 		    a2 = new JMenu("Logout");
 		    m1.add(menu);
 		    m1.add(a1);
 		    m1.add(a2);
 		      
 		    fr.setJMenuBar(m1);
+		   
+			a1.addMenuListener(new MenuListener() {
+
+				@Override
+				public void menuCanceled(MenuEvent e) {
+					
+					
+				}
+
+				@Override
+				public void menuDeselected(MenuEvent e) {
+					
+					
+				}
+
+				@Override
+				public void menuSelected(MenuEvent e) {
+					
+				int result = JOptionPane.showConfirmDialog(fr,"Sure? You want to Go to Menu?", "Confirm",
+				               JOptionPane.YES_NO_OPTION,
+				               JOptionPane.QUESTION_MESSAGE);
+					
+				            if(result == JOptionPane.YES_OPTION){
+				              
+				            	//System.out.println("JMenu Clicked.");
+								Admin ad = new Admin(c);
+								JFrame newFr = new JFrame("Admin");
+								ad.AdminGUI(newFr, uid, pass,c);
+								fr.setVisible(false);
+				            	
+				            	
+				            }else if (result == JOptionPane.NO_OPTION){
+				            	
+				       
+				            }
+				            
+				            else {
+				               
+				            	
+				            }
+				            
+				}
+				
+			});
+			
+			a2.addMenuListener(new MenuListener() {
+
+				@Override
+				public void menuCanceled(MenuEvent e) {
+					
+					
+				}
+
+				@Override
+				public void menuDeselected(MenuEvent e) {
+					
+					
+				}
+
+				@Override
+				public void menuSelected(MenuEvent e) {
+					
+					JOptionPane.showMessageDialog(fr, "Logged Out Successfully", "Success", JOptionPane.OK_CANCEL_OPTION);
+					
+					//System.out.println("JMenu Clicked.");
+					Admin ad = new Admin(c);
+					Artist ar = new Artist(c);
+					Driver d = new Driver();
+					fr.setVisible(false);
+					Driver.LoginUI(ad, ar, c);
+					
+					
+				}
+				
+			});
 			
 				
 			panel.setLayout(null);
@@ -290,13 +411,13 @@ public class Admin implements LoginLogout{
 						
 						if(ad.editProfileUid(newUID,uid)) {
 							
-							JOptionPane.showMessageDialog(null, "Username Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Username Updated", "Success", JOptionPane.PLAIN_MESSAGE);
 							
 						}
 						
 						else {
 							
-							JOptionPane.showMessageDialog(null, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
 							
 						}
 						
@@ -320,13 +441,13 @@ public class Admin implements LoginLogout{
 						
 						if(ad.editProfilePwd(newPass,uid)) {
 							
-							JOptionPane.showMessageDialog(null, "Password Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Password Updated", "Success", JOptionPane.PLAIN_MESSAGE);
 							
 						}
 						
 						else {
 							
-							JOptionPane.showMessageDialog(null, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(fr, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
 							
 						}
 						

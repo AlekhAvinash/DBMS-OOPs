@@ -16,7 +16,9 @@ public class Driver {
 		try {
 			
 			Class.forName("org.postgresql.Driver");
+
 			connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JavaProject", "postgres", "03012001");
+
 			//st = connect.createStatement();
 			
 		}
@@ -96,7 +98,7 @@ public static void LoginUI(Admin admin,Artist artist,Connection c) {
 					if(admin.login(userName, Pwd)) {
 						
 						JFrame s = new JFrame("Admin");
-						admin.AdminGUI(s,userName,Pwd);
+						admin.AdminGUI(s,userName,Pwd,c);
 						username.setText(null);
 						password1.setText(null);
 						frame.setVisible(false);
@@ -118,7 +120,7 @@ public static void LoginUI(Admin admin,Artist artist,Connection c) {
 					
 					else {
 						
-						JOptionPane.showMessageDialog(null, "Invalid Login Credentials", "Login Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "Invalid Login Credentials", "Login Error", JOptionPane.ERROR_MESSAGE);
 						
 						username.setText(null);
 						password1.setText(null);
@@ -152,7 +154,7 @@ public static void LoginUI(Admin admin,Artist artist,Connection c) {
 						password1.setText(null);
 						
 						JFrame a = new JFrame("Artist");
-						artist.ArtistUI(a,userName,Pwd);
+						artist.ArtistUI(a,userName,Pwd,c);
 						frame.setVisible(false);
 						
 						//MENU TO-DO
@@ -169,7 +171,7 @@ public static void LoginUI(Admin admin,Artist artist,Connection c) {
 						
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "Invalid Login Credentials", "Login Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "Invalid Login Credentials", "Login Error", JOptionPane.ERROR_MESSAGE);
 						
 						username.setText(null);
 						password1.setText(null);
