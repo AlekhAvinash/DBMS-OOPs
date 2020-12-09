@@ -1,7 +1,11 @@
 package main;
 
+import java.awt.*;
+import java.awt.event.*;
 import java.sql.*;
 import java.util.Scanner;
+
+import javax.swing.*;
 
 public class Artist implements LoginLogout{
 	
@@ -16,7 +20,119 @@ public class Artist implements LoginLogout{
 	PreparedStatement ps = null;
 
 	Artist(Connection c){
+		
 		this.conn = c;
+		
+	}
+	
+	public void ArtistUI(JFrame fr,String uid, String pass) {
+		
+		JMenu menu;  
+	    JMenuItem a1,a2;
+	      
+	    menu = new JMenu("Home");
+	    JMenuBar m1 = new JMenuBar();
+	    //a1 = new JMenu("Option");
+	    a2 = new JMenu("Logout");
+	    m1.add(menu);
+	    //m1.add(a1);
+	    m1.add(a2);
+	      
+	    fr.setJMenuBar(m1);
+		
+		JPanel panel = new JPanel();
+		fr.add(panel);
+			
+		panel.setLayout(null);
+		fr.setAlwaysOnTop(true);
+		
+		JButton b1 = new JButton("Edit-Profile");
+		JButton b2 = new JButton("Upload");
+		JButton b3 = new JButton("Edit-Music");
+		JButton b4 = new JButton("View-Analytics");
+		
+		b1.setBounds(300,200,150,25);
+		b2.setBounds(300,250,150,25);
+		b3.setBounds(300,300,150,25);
+		b4.setBounds(300,350,150,25);
+		
+		b1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JFrame newfr = new JFrame("Edit Profile");
+				editProfileGUIartist edit = new editProfileGUIartist(conn,newfr,uid,pass);
+				fr.setVisible(false);
+			}
+			
+		});
+		
+		b2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					
+					Upload ar = new Upload(uid,pass,conn);
+					JFrame newFr = new JFrame("Upload: ");
+					ar.UploadUI(newFr, uid, pass);
+					fr.setVisible(false);
+					
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+		
+		b3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					
+					EditMusic ar = new EditMusic(uid,pass,conn);
+					
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+		
+		b4.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					
+					ViewAnalytics view = new ViewAnalytics(uid,pass,conn);
+					
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+		
+		panel.add(b1);
+		panel.add(b2);
+		panel.add(b3);
+		panel.add(b4);
+		
+		fr.setSize(800, 600);
+		fr.setVisible(true);
+		
 	}
 	
 	public boolean login(String uid, String pwd) throws SQLException{
@@ -38,49 +154,69 @@ public class Artist implements LoginLogout{
 		return false;
 	}
 	
-	public void editProfileAddr() throws SQLException {
-		System.out.println("Enter new address");
-		input.nextLine();
-		String newAddr = input.nextLine();
+	public boolean editProfileAddr(String newAddr,String uid) throws SQLException {
+		
+		//TO-DO - DOESN'T WORK.
+		
 		if (newAddr.equals(STRING)){
-			return;
+			return false;
 		}
-		ps = conn.prepareStatement("Update Address set Address=? where Artist_ID=?");
-		ps.setString(1,newAddr);
-		ps.setString(2, aid);
-
-		ps.executeUpdate();
+		
+		else {
+			
+			//CHANGE QUERY ARTIST_ID TO UID.
+			
+			ps = conn.prepareStatement("Update Address set Address=? where Artist_ID=?");
+			ps.setString(1,newAddr);
+			ps.setString(2, aid);
+	
+			ps.executeUpdate();
+			
+			return true;
+		
+		}
 	}
 
-	public void editProfilePwd() throws SQLException {
-		System.out.println("Enter new password");
-		input.nextLine();
-		String newPwd = input.nextLine();
+	public boolean editProfilePwd(String newPwd,String uid) throws SQLException {
+		
 		if (newPwd.equals(STRING)){
-			return;
+			return false;
 		}
-		ps = conn.prepareStatement("Update users set pwd=? where Artist_id=?");
-		ps.setString(1,newPwd);
-		ps.setString(2, aid);
-
-		ps.executeUpdate();
+		
+		else {
+			
+			ps = conn.prepareStatement("Update users set pwd=? where uid=?");
+			ps.setString(1,newPwd);
+			ps.setString(2, uid);
+	
+			ps.executeUpdate();
+			
+			return true;
+		}
 	}
 
-	public void editProfileUid() throws SQLException {
-		System.out.println("Enter new username");
-		input.nextLine();
-		String newUid = input.nextLine();
+	public boolean editProfileUid(String newUid,String uid) throws SQLException {
+		
 		if (newUid.equals(STRING)){
-			return;
+			return false;
 		}
-		ps = conn.prepareStatement("Update users set uid=? where Artist_id=?");
-		ps.setString(1,newUid);
-		ps.setString(2, aid);
-
-		ps.executeUpdate();
+		
+		else {
+			
+			ps = conn.prepareStatement("Update users set uid=? where uid=?");
+			ps.setString(1,newUid);
+			ps.setString(2, uid);
+	
+			ps.executeUpdate();
+			
+			return true;
+		}
 	}
 
-    public void editProfile() throws SQLException {
+	
+	
+    /*public void editProfile() throws SQLException {
+    	
 		System.out.println("1. Edit UserName\n2. Edit Password");
 		int option = input.nextInt();
 		switch (option) {
@@ -93,7 +229,7 @@ public class Artist implements LoginLogout{
 			default:
 				System.out.println("Enter Valid Input (1/2)");
 		}
-	}
+	}*/
 	
 	public void logout(boolean b){
 		try {
@@ -112,4 +248,164 @@ public class Artist implements LoginLogout{
 		if (conn != null && b)
 			conn.close();
     }
+	
+	public class editProfileGUIartist {
+		
+		editProfileGUIartist(Connection c,JFrame fr,String uid,String pass) {
+			
+			Artist ar = new Artist(c);
+			
+			JLabel label = new JLabel("Enter New ID:");
+			label.setBounds(200,200,100,25);
+			
+			JTextField text =  new JTextField();
+			text.setBounds(310,200,200,25);
+			
+			JLabel label2 = new JLabel("Enter New Pass:");
+			label2.setBounds(200,300,100,25);
+			
+			JTextField text2 =  new JTextField();
+			text2.setBounds(310,300,200,25);
+			
+			JLabel label3 = new JLabel("Enter New Address:");
+			label3.setBounds(200,400,100,25);
+			
+			JTextField text3 =  new JTextField();
+			text3.setBounds(310,400,200,25);
+			
+			
+			JPanel panel = new JPanel();
+			fr.add(panel);
+			
+			JMenu menu;  
+		    JMenuItem a1,a2;
+		      
+		    menu = new JMenu("Home");
+		    JMenuBar m1 = new JMenuBar();
+		    a1 = new JMenu("Option");
+		    a2 = new JMenu("Logout");
+		    m1.add(menu);
+		    m1.add(a1);
+		    m1.add(a2);
+		      
+		    fr.setJMenuBar(m1);
+			
+				
+			panel.setLayout(null);
+			fr.setAlwaysOnTop(true);
+			
+			JButton b1 = new JButton("Edit User-ID");
+			JButton b2 = new JButton("Change Password");
+			JButton b3 = new JButton("Edit Address");
+			
+			b1.setBounds(520,200,150,25);
+			b2.setBounds(520,300,150,25);
+			b3.setBounds(520, 400, 150, 25);
+			
+			b1.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					try {
+						
+						String newUid = text.getText();
+						
+						if(ar.editProfileUid(newUid,uid)) {
+							
+							JOptionPane.showMessageDialog(null, "Username Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							
+						}
+						
+						else {
+							
+							JOptionPane.showMessageDialog(null, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+							
+						}	
+						
+						
+					} catch (SQLException e1) {
+						
+						e1.printStackTrace();
+					}
+					
+				}
+			});
+			
+			b2.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					try {
+						
+						String newPass = text2.getText();
+						
+						if(ar.editProfilePwd(newPass,uid)) {
+							
+							JOptionPane.showMessageDialog(null, "Password Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							
+						}
+						
+						else {
+							
+							JOptionPane.showMessageDialog(null, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+							
+						}
+						
+					} catch (SQLException e1) {
+						
+						e1.printStackTrace();
+					}
+					
+				}
+			});
+			
+			b3.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					try {
+						
+						String newAdd = text3.getText();
+						if(ar.editProfileAddr(newAdd,uid)) {
+							
+							JOptionPane.showMessageDialog(null, "Address Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							
+						}
+						
+						else {
+							
+							JOptionPane.showMessageDialog(null, "Update Failed.", "Error", JOptionPane.ERROR_MESSAGE);
+							
+						}
+						
+					} catch (SQLException e1) {
+						
+						e1.printStackTrace();
+					}
+					
+				}
+			});
+			
+			panel.add(label);
+			panel.add(text);
+			panel.add(b1);
+			
+			panel.add(label2);
+			panel.add(text2);
+			panel.add(b2);
+			
+			panel.add(label3);
+			panel.add(text3);
+			panel.add(b3);
+			
+			fr.setSize(800, 600);
+			fr.setVisible(true);
+			
+		}
+		
+		
+	}
 }

@@ -2,6 +2,8 @@ package main;
 
 import java.sql.*;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
 public class EditMusic extends Artist{
 	
 	Connection c = null;
@@ -12,7 +14,9 @@ public class EditMusic extends Artist{
 		login(uid,pwd);
 		
 	}
-
+	public void editMusicUI(JFrame fr,String uid,String pass) {
+		
+	}
 	public void removeAlbum() throws Exception {
         
         Scanner input = new Scanner(System.in);
