@@ -226,17 +226,13 @@ public class Artist implements LoginLogout{
 		return false;
 	}
 	
-	public boolean editProfileAddr(String newAddr,String uid) throws SQLException {
-		
-		//TO-DO - DOESN'T WORK.
+	public boolean editProfileAddr(String newAddr,String aid) throws SQLException {
 		
 		if (newAddr.equals(STRING)){
 			return false;
 		}
 		
 		else {
-			
-			//CHANGE QUERY ARTIST_ID TO UID.
 			
 			ps = conn.prepareStatement("Update Address set Address=? where Artist_ID=?");
 			ps.setString(1,newAddr);
@@ -328,23 +324,28 @@ public class Artist implements LoginLogout{
 			Artist ar = new Artist(c);
 			
 			JLabel label = new JLabel("Enter New ID:");
-			label.setBounds(100,100,100,25);
-			
-			JTextField text =  new JTextField();
-			text.setBounds(210,100,200,25);
-			
-			JLabel label2 = new JLabel("Enter New Pass:");
-			label2.setBounds(100,200,100,25);
-			
-			JTextField text2 =  new JTextField();
-			text2.setBounds(210,200,200,25);
-			
-			JLabel label3 = new JLabel("Enter New Address:");
-			label3.setBounds(100,300,100,25);
-			
-			JTextField text3 =  new JTextField();
-			text3.setBounds(210,300,200,25);
-			
+            label.setBounds(70,100,100,25);
+            
+            JTextField text =  new JTextField();
+            text.setBounds(210,100,200,25);
+            
+            JLabel label2 = new JLabel("Enter New Pass:");
+            label2.setBounds(70,200,100,25);
+            
+            JTextField text2 =  new JTextField();
+            text2.setBounds(210,200,200,25);
+            
+            JLabel label3 = new JLabel("Enter New Address:");
+            label3.setBounds(70,300,200,25);
+            
+            JTextField text3 =  new JTextField();
+            text3.setBounds(210,300,200,25);
+            
+            JLabel label4 = new JLabel("Enter Artist ID:");
+            label4.setBounds(70,340,100,25);
+            
+            JTextField text4 =  new JTextField();
+            text4.setBounds(210,340,200,25);
 			
 			JPanel panel = new JPanel();
 			fr.add(panel);
@@ -446,8 +447,8 @@ public class Artist implements LoginLogout{
 			JButton b3 = new JButton("Edit Address");
 			
 			b1.setBounds(450,100,150,25);
-			b2.setBounds(450,200,150,25);
-			b3.setBounds(450,300,150,25);
+            b2.setBounds(450,200,150,25);
+            b3.setBounds(450,320,150,25);
 			
 			b1.addActionListener(new ActionListener() {
 
@@ -461,6 +462,15 @@ public class Artist implements LoginLogout{
 						if(ar.editProfileUid(newUid,uid)) {
 							
 							JOptionPane.showMessageDialog(fr, "Username Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							
+							JOptionPane.showMessageDialog(fr, "Please Login again with New Credentials.", "Success", JOptionPane.OK_CANCEL_OPTION);
+							
+							//System.out.println("JMenu Clicked.");
+							Admin ad = new Admin(c);
+							Artist ar = new Artist(c);
+							Driver d = new Driver();
+							fr.setVisible(false);
+							Driver.LoginUI(ad, ar, c);
 							
 						}
 						
@@ -492,6 +502,16 @@ public class Artist implements LoginLogout{
 							
 							JOptionPane.showMessageDialog(fr, "Password Updated", "Success", JOptionPane.PLAIN_MESSAGE);
 							
+							JOptionPane.showMessageDialog(fr, "Please Login again with New Credentials.", "Success", JOptionPane.OK_CANCEL_OPTION);
+							
+							//System.out.println("JMenu Clicked.");
+							Admin ad = new Admin(c);
+							Artist ar = new Artist(c);
+							Driver d = new Driver();
+							fr.setVisible(false);
+							Driver.LoginUI(ad, ar, c);
+							
+							
 						}
 						
 						else {
@@ -516,7 +536,8 @@ public class Artist implements LoginLogout{
 					try {
 						
 						String newAdd = text3.getText();
-						if(ar.editProfileAddr(newAdd,uid)) {
+						String aid = text4.getText();
+						if(ar.editProfileAddr(newAdd,aid)) {
 							
 							JOptionPane.showMessageDialog(fr, "Address Updated", "Success", JOptionPane.PLAIN_MESSAGE);
 							
@@ -547,6 +568,9 @@ public class Artist implements LoginLogout{
 			panel.add(label3);
 			panel.add(text3);
 			panel.add(b3);
+			
+			panel.add(label4);
+            panel.add(text4);
 			
 			fr.setSize(800, 600);
 			fr.setVisible(true);

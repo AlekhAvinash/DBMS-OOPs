@@ -433,6 +433,15 @@ public class Admin implements LoginLogout{
 							
 							JOptionPane.showMessageDialog(fr, "Username Updated", "Success", JOptionPane.PLAIN_MESSAGE);
 							
+							JOptionPane.showMessageDialog(fr, "Please Login again with New Credentials.", "Success", JOptionPane.OK_CANCEL_OPTION);
+							
+							//System.out.println("JMenu Clicked.");
+							Admin ad = new Admin(c);
+							Artist ar = new Artist(c);
+							Driver d = new Driver();
+							fr.setVisible(false);
+							Driver.LoginUI(ad, ar, c);
+							
 						}
 						
 						else {
@@ -462,6 +471,15 @@ public class Admin implements LoginLogout{
 						if(ad.editProfilePwd(newPass,uid)) {
 							
 							JOptionPane.showMessageDialog(fr, "Password Updated", "Success", JOptionPane.PLAIN_MESSAGE);
+							
+							JOptionPane.showMessageDialog(fr, "Please Login again with New Credentials.", "Success", JOptionPane.OK_CANCEL_OPTION);
+							
+							//System.out.println("JMenu Clicked.");
+							Admin ad = new Admin(c);
+							Artist ar = new Artist(c);
+							Driver d = new Driver();
+							fr.setVisible(false);
+							Driver.LoginUI(ad, ar, c);
 							
 						}
 						
